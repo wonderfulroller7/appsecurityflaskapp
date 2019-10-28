@@ -36,7 +36,7 @@ def close_db(e=None):
 @with_appcontext
 def initialise_db():
     init_db()
-    click.echo('Initialised the database')
+    # click.echo('Initialised the database')
 
 def initialise_app(app):
 

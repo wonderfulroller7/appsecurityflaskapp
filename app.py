@@ -3,6 +3,7 @@ from flask import Flask
 from config import Config
 
 import database
+import login
 
 def create_app():
     app = Flask(__name__)
@@ -15,9 +16,10 @@ def create_app():
         os.makedirs(app.instance_path)
     except OSError:
         pass
-    
+
     database.initialise_app(app)
     with app.app_context():
         database.init_db()
-        
+    
+    app.register_blueprint(login.root_view)
     return app
