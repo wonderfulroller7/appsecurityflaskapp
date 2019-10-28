@@ -1,22 +1,23 @@
+import os
 from flask import Flask
+from config import Config
 
-app = Flask(__name__)
+import database
 
-@app.route("/")
-def home():
-    return "Hello, world!"
+def create_app():
+    app = Flask(__name__)
+    app.config.from_mapping(
+        SECRET_KEY = 'babayaga',
+        DATABASE = os.path.join(app.instance_path, 'spellchecker.sqlite'),
+    )
 
-@app.route("/login")
-def login():
-    return "Login user."
-
-@app.route("/register")
-def register():
-    return "Register user."
-
-@app.route("/spell_check")
-def spell_check():
-    return "Spell Check."
-
-if __name__ == "__main__":
-    app.run(debug=True)
+    try:
+        os.makedirs(app.instance_path)
+    except OSError:
+        pass
+    
+    database.initialise_app(app)
+    with app.app_context():
+        database.init_db()
+        
+    return app
