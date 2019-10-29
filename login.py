@@ -5,13 +5,14 @@ root_view = Blueprint('login', __name__, url_prefix='')
 
 @root_view.route('/', methods=['GET'])
 def basepath():
-    return render_template('/base.html')
+    return render_template('/login.html')
 
 @root_view.route('/register', methods=['GET', 'POST'])
 def register():
 
     if request.method == 'POST':
-        pass
+        return render_template('/registrationFailure.html')
+    return render_template('/register.html')
 
 @root_view.route('/login', methods=['GET', 'POST'])
 def login():
