@@ -1,6 +1,6 @@
 # Library imports
-from flask import Blueprint, render_template, redirect, g, url_for, request
-from werkzeug import generate_password_hash
+from flask import Blueprint, render_template, redirect, g, url_for, request, session
+from werkzeug.security import generate_password_hash, check_password_hash
 
 # Local file imports
 from database import get_db
@@ -43,8 +43,47 @@ def register():
 def login():
 
     if request.method == 'GET':
-        uid = g.user
-        if uid is not None:
+        uname = g.user
+        if uname is not None:
             return redirect(url_for('login.basepath'))
+        return render_template('/login.html')
     else:
-        return redirect(url_for('login.basepath'))
+        uname = g.user
+        if uname is not None:
+            return redirect(url_for(login.basepath))
+        uname = request.form['uname']
+        pword = request.form['pword']
+        dualauth = request.form['2fa']
+        select_query = 'SELECT * FROM user WHERE uname = ?'
+        db_connection = get_db()
+        error = None
+
+        cur_user = db_connection.execute(select_query, (uname,)).fetchone()
+        print(cur_user)
+        if cur_user is None:
+            error = 'Invalid username/password/2fa'
+        elif not check_password_hash(cur_user['password'], pword):
+            error = 'Invalid username/password/2fa'
+        elif not check_password_hash(cur_user['phone_number'], dualauth):
+            error = 'Invalid username/password/2fa'
+
+        if error is None:
+            session.clear()
+            session['SPELLSESSIONID'] = cur_user['id']
+            session.permanent = True
+        
+        return redirect(url_for('login.loginresult', result="error"))
+
+@root_view.route('/login_success')
+def loginresult():
+    return render_template('/login_success.html',result=request.args.get('result'))
+
+@root_view.before_app_request
+def check_if_user_isLoggedIn():
+    user_id = session.get('user_id')
+    select_query = 'SELECT * FROM user WHERE uname = ?'
+    if user_id is None:
+        g.user = None
+    else:
+        g.user = get_db().execute(select_query, (user_id)).fetchone()
+    
