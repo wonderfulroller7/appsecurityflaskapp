@@ -80,6 +80,13 @@ def login():
 def loginresult():
     return render_template('/login_success.html',result=request.args.get('result'))
 
+@root_view.route('/logout')
+def logout():
+    print(request.headers)
+    session.clear()
+    g.user = None
+    return redirect(url_for('login.basepath'))
+
 @root_view.before_app_request
 def check_if_user_isLoggedIn():
     user_session_id = session.get('session_id')
