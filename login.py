@@ -9,7 +9,7 @@ root_view = Blueprint('login', __name__, url_prefix='')
 
 @root_view.route('/', methods=['GET'])
 def basepath():
-    return render_template('/login.html')
+    return render_template('/spellchecker.html')
 
 @root_view.route('/register', methods=['GET', 'POST'])
 def register():
