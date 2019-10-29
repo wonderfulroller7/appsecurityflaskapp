@@ -1,6 +1,7 @@
 import os
 from flask import Flask
 from config import Config
+from flask_wtf.csrf import CSRFProtect
 
 import database
 import login
@@ -8,6 +9,8 @@ import spellchecker
 
 def create_app():
     app = Flask(__name__)
+    csrf = CSRFProtect()
+    csrf.init_app(app)
     app.config.from_mapping(
         SECRET_KEY = 'babayaga',
         DATABASE = os.path.join(app.instance_path, 'spellchecker.sqlite'),
@@ -24,4 +27,7 @@ def create_app():
     
     app.register_blueprint(login.root_view)
     app.register_blueprint(spellchecker.root_view)
+
+    csrf.exempt(login.root_view)
+    
     return app
