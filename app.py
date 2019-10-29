@@ -4,6 +4,7 @@ from config import Config
 
 import database
 import login
+import spellchecker
 
 def create_app():
     app = Flask(__name__)
@@ -22,4 +23,5 @@ def create_app():
         database.init_db()
     
     app.register_blueprint(login.root_view)
+    app.register_blueprint(spellchecker.root_view)
     return app

@@ -1,6 +1,7 @@
 # Library imports
 from flask import Blueprint, render_template, redirect, g, url_for, request, session
 from werkzeug.security import generate_password_hash, check_password_hash
+import functools
 
 # Local file imports
 from database import get_db
@@ -89,3 +90,10 @@ def check_if_user_isLoggedIn():
     else:
         g.user = get_db().execute(select_query, (user_session_id,)).fetchone()
     
+def isLoggedIn(view):
+    @functools.wraps(view)
+    def wrapped_view(**kwargs):
+        if g.user is None:
+            return redirect(url_for('login.login'))
+        return view(**kwargs)
+    return wrapped_view

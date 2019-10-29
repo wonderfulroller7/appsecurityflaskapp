@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}Spell Checker{% endblock %}
+{% block content %}
+<div class="container">
+    <h2>Spell Checker Results</h2>
+    <div class="alert alert-success" role="alert">
+        <h4 class="alert-heading">Input</h4>
+        <hr>
+        <p class="mb-0" id="textout">{{string_query}}</p>
+    </div>
+    <div class="alert alert-danger" role="alert">
+        <h4 class="alert-heading">Mispelled words</h4>
+        <hr>
+        <p class="mb-0" id="misspelled">{{misspelled}}</p>
+    </div>
+    <div>
+        <a href="/spell_check">Check more spellings</a>
+    </div>
+    
+</div>
+{% endblock %}

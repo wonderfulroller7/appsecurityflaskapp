@@ -4,7 +4,7 @@
 <div class="jumbotron">
   <h1 class="display-4">Spellchecker tool {% if g.user %}, {{g.user['uname']}}{% endif %}!</h1>
   {% if g.user %}
-    <form method="post">
+    <form method="post" action="/spell_check">
         <div class="form-group">
             <label for="inputtext">Text:</label>
             <textarea class="form-control vresize" name="inputtext" id="inputtext" required ></textarea>
