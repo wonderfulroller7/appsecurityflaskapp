@@ -33,7 +33,7 @@ def register():
         if error is not None:
             return render_template('/failure.html')
         else:
-            db_connection.execute(insert_query,(user, phone, generate_password_hash(password)))
+            db_connection.execute(insert_query,(user, phone, password))
             db_connection.commit()
             # print(user, generate_password_hash(password), generate_password_hash(phone))
             return render_template('/success.html')
@@ -60,12 +60,12 @@ def login():
         error = None
 
         cur_user = db_connection.execute(select_query, (uname,)).fetchone()
-        print(uname + ' ' + dualauth + ' ' + generate_password_hash(pword))
-        print(cur_user['uname'] + ' ' + cur_user['phone_number'] + ' ' + cur_user['password'])
+        # print(uname + ' ' + dualauth + ' ' + generate_password_hash(pword))
+        # print(cur_user['uname'] + ' ' + cur_user['phone_number'] + ' ' + cur_user['password'])
         if cur_user is None:
             error = 'Incorrect'
-        # elif not check_password_hash(cur_user['password'], pword):
-        #     error = 'Invalid username/password/2fa'
+        elif cur_user['password'] == pword:
+            error = 'Invalid username/password/2fa'
         elif not cur_user['phone_number'] == dualauth:
             error = 'Failure in Two-factor authentication'
 
