@@ -72,7 +72,7 @@ def login():
             session['SPELLSESSIONID'] = cur_user['id']
             session.permanent = True
         
-        return redirect(url_for('login.loginresult', result="error"))
+        return redirect(url_for('login.loginresult', result=error))
 
 @root_view.route('/login_success')
 def loginresult():
