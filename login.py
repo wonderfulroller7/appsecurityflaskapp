@@ -13,15 +13,14 @@ def basepath():
 
 @root_view.route('/register', methods=['GET', 'POST'])
 def register():
-    print(request.method)
+    
     if request.method == 'POST':
-        select_query = 'SELECT id FROM user WHERE name = ?'
-        insert_query = 'INSERT INTO user(user, password, phone) VALUES (?, ?, ?)'
-        user = request.form['uid']
-        password = request.form['password']
-        phone = request.form['doublefactor']
+        select_query = 'SELECT id FROM user WHERE uname = ?'
+        insert_query = 'INSERT INTO user(uname, phone_number, password) VALUES (?, ?, ?)'
+        user = request.form['uname']
+        password = request.form['pword']
+        phone = request.form['2fa']
         db_connection = get_db()
-        print(user, password, phone)
         error = None
         if not user:
             error = 1
@@ -29,14 +28,14 @@ def register():
             error = 1
         elif db_connection.execute(select_query, (user,)).fetchone() is not None:
             error = 'User {} is already registered.'.format(user)
-        print(error)
+        # print(error)
         if error is not None:
+            return render_template('/failure.html')
+        else:
             db_connection.execute(insert_query,(user, generate_password_hash(password), generate_password_hash(phone)))
             db_connection.commit()
-            print(user, generate_password_hash(password), generate_password_hash(phone))
+            # print(user, generate_password_hash(password), generate_password_hash(phone))
             return render_template('/success.html')
-        else:
-            return render_template('/failure.html')
 
     return render_template('/register.html')
 
