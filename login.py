@@ -70,7 +70,7 @@ def login():
 
         if error is None:
             session.clear()
-            session['SPELLSESSIONID'] = cur_user['id']
+            session['session_id'] = cur_user['id']
             session.permanent = True
         
         return redirect(url_for('login.loginresult', result=error))
@@ -81,10 +81,11 @@ def loginresult():
 
 @root_view.before_app_request
 def check_if_user_isLoggedIn():
-    user_id = session.get('user_id')
-    select_query = 'SELECT * FROM user WHERE uname = ?'
-    if user_id is None:
+    user_session_id = session.get('session_id')
+    print(user_session_id)
+    select_query = 'SELECT * FROM user WHERE id = ?'
+    if user_session_id is None:
         g.user = None
     else:
-        g.user = get_db().execute(select_query, (user_id)).fetchone()
+        g.user = get_db().execute(select_query, (user_session_id,)).fetchone()
     

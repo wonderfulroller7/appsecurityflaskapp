@@ -2,12 +2,9 @@
 {% block title %}Log In{% endblock %} 
 {% block content %}
 <div class="jumbotron">
-  <h1 class="display-4">Welcome to spellchecker {% if g.user %}, {{g.user['username']}}{% endif %}!</h1>
-  <p class="lead">It is a spellchecker written in flask and uses C-code at the backend for the application logic</p>
+  <h1 class="display-4">Spellchecker tool {% if g.user %}, {{g.user['uname']}}{% endif %}!</h1>
   {% if g.user %}
     <form method="post">
-    <!-- <form method="post" action="/spell_check"> -->
-        <!-- <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/> -->
         <div class="form-group">
             <label for="inputtext">Text:</label>
             <textarea class="form-control vresize" name="inputtext" id="inputtext" required ></textarea>
