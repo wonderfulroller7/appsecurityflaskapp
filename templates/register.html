@@ -8,7 +8,7 @@
     </div>
     <ul class="nav navbar-nav">
     {% if g.user %}
-      <li><span>{{ g.user['username'] }}</span></li>
+      <li><span>{{ g.user['uid'] }}</span></li>
       <!-- <li><a href="{{ url_for('spell_check.logout') }}">Log Out</a></li> -->
     {% else %}
       <li class="active" ><a href="{{ url_for('login.register') }}">Register</a></li>
@@ -33,7 +33,7 @@
     </div>
     <div class="form-group">
         <label for="pwd">Confirm Password:</label>
-        <input class="form-control" placeholder="Confirm entered password" type="password" name="password" id="cpassword" required>
+        <input class="form-control" placeholder="Confirm entered password" type="password" name="password" id="cpassword">
     </div>
     <div class="form-group">
       <label for="2fa">Phone-number:</label>
