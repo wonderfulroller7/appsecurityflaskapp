@@ -20,15 +20,15 @@
     <div class="navbar-header">
       <span>SpellChecker</span>
     </div>
-    <ul class="nav navbar-nav">
-    {% if g.user %}
-      <li><a href="#">{{ g.user['username'] }}</li></a>
-      <!-- <li><a href="{{ url_for('spell_check.logout') }}">Log Out</a></li> -->
-    {% else %}
-      <li><a href="{{ url_for('login.register') }}">Register</a></li>
-      <li class="active"><a href="{{ url_for('login.login') }}">Log In</a></li>
-    {% endif %}
-  </ul>
+      <ul class="nav navbar-nav">
+        {% if g.user %}
+          <li><a href="#">{{ g.user['username'] }}</li></a>
+              <!-- <li><a href="{{ url_for('spell_check.logout') }}">Log Out</a></li> -->
+        {% else %}
+          <li><a href="{{ url_for('login.register') }}">Register</a></li>
+          <li class="active"><a href="{{ url_for('login.login') }}">Log In</a></li>
+        {% endif %}
+      </ul>
   </div>
 </nav>
 {% endblock %}

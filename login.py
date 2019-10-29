@@ -65,7 +65,7 @@ def login():
             error = 'Invalid username/password/2fa'
         # elif not check_password_hash(cur_user['password'], pword):
         #     error = 'Invalid username/password/2fa'
-        elif cur_user['phone_number'] == dualauth:
+        elif not cur_user['phone_number'] == dualauth:
             error = 'Invalid username/password/2fa'
 
         if error is None:
