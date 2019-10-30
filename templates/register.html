@@ -1,23 +1,5 @@
 {% extends 'base.html' %}
 {% block title %}Register New User{% endblock %}
-{% block navbar %}
-<nav class="navbar navbar-dark bg-dark">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="#">SpellChecker</a>
-    </div>
-    <ul class="nav navbar-nav">
-    {% if g.user %}
-      <li><span>{{ g.user['uid'] }}</span></li>
-    {% else %}
-      <li class="active" ><a href="{{ url_for('login.register') }}">Register</a></li>
-      <li><a href="{{ url_for('login.login') }}">Log In</a></li>
-    {% endif %}
-  </ul>
-  </div>
-</nav>
-{% endblock %}
-
 {% block content %}
 <div class="container">
   <h2>Register a new user</h2>
