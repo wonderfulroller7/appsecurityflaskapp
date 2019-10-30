@@ -16,6 +16,11 @@ def create_app():
         DATABASE = os.path.join(app.instance_path, 'spellchecker.sqlite'),
     )
 
+    app.config.update(
+        SESSION_COOKIE_HTTPONLY=True,
+        SESSION_COOKIE_SAMESITE='Strict',
+    )
+
     try:
         os.makedirs(app.instance_path)
     except OSError:
