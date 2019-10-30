@@ -3,10 +3,10 @@ from flask import g, session
 
 import database
 
-def registration_test_get(client, app):
+def test_registration_get(client, app):
     assert client.get('/register').status_code == 200
 
-def registration_test_post(client, app):
+def test_registration_post(client, app):
     client.post('/register', data = {'uname': 'sourbose', 'pword': 'test123', '2fa': '9292197847'})
     with app.app_context():
         assert database.get_db().execute(
