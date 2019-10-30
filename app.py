@@ -8,7 +8,7 @@ import login
 import spellchecker
 
 def create_app():
-    app = Flask(__name__)
+    app = Flask(__name__, instance_relative_config=True)
     csrf = CSRFProtect()
     csrf.init_app(app)
     app.config.from_mapping(
