@@ -106,3 +106,9 @@ def isLoggedIn(view):
             return redirect(url_for('login.login'))
         return view(**kwargs)
     return wrapped_view
+
+@root_view.after_request
+def cache(response):
+    response.headers["X-Frame-Options"] = "SAMEORIGIN"
+    response.headers['Content-Security-Policy'] = "default-src 'self'"
+    return response

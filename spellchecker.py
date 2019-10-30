@@ -34,3 +34,9 @@ def spell_check():
         return render_template('/spellreview.html', string_query=string_to_be_checked, misspelled=shell_output)
     else:
         return render_template('/spellchecker.html')
+
+@root_view.after_request
+def cache(response):
+    response.headers["X-Frame-Options"] = "SAMEORIGIN"
+    response.headers['Content-Security-Policy'] = "default-src 'self'"
+    return response
