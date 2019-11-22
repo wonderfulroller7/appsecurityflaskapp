@@ -35,6 +35,12 @@ def spell_check():
     else:
         return render_template('/spellchecker.html')
 
+@root_view.route('/history', methods=['GET'])
+@isLoggedIn
+def get_queries():
+    if request.method == 'GET':
+        return
+
 @root_view.after_request
 def cache(response):
     response.headers["X-Frame-Options"] = "SAMEORIGIN"

@@ -7,6 +7,7 @@ import database
 import login
 import spellchecker
 
+
 def create_app():
     app = Flask(__name__, instance_relative_config=True)
     csrf = CSRFProtect()
