@@ -30,6 +30,7 @@ def create_app():
     database.initialise_app(app)
     with app.app_context():
         database.init_db()
+        
     
     app.register_blueprint(login.root_view)
     app.register_blueprint(spellchecker.root_view)

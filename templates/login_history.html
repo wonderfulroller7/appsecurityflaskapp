@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %}Spell Checker{% endblock %}
+{% block content %}
+<div class="container">
+    <form method="post" action="/login_history ">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+        <div class="form-group">
+            <label for="userid">Userid Login History:</label>
+            <input class="form-control vresize" name="userid" id="userid" required ></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Get User history</button>
+    </form>
+    <br/>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>User</th>
+            <th>Login/logout History</th>
+        </tr>
+        {% for query in list %}
+        <tr>
+            <td id="{{query.id}}">{{query.id}}</td>
+            <td>{{query.username}}</td>
+            <td id="{{query.action}}">
+                {{query.action}}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    
+</div>
+{% endblock %}

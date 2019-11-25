@@ -24,7 +24,7 @@
       <ul class="navbar-nav">
         {% if g.user %}
         <li class="nav-item">
-          <a href="#">{{ g.user['uname'] }}</a>
+          <a href="{{ url_for('spellchecker.get_queries') }}">{{ g.user['uname'] }}</a>
         </li>
         <li class="nav-item">
           <a href="{{ url_for('login.logout') }}">Log Out</a>

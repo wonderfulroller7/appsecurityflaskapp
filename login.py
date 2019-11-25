@@ -2,6 +2,7 @@
 from flask import Blueprint, render_template, redirect, g, url_for, request, session
 from werkzeug.security import generate_password_hash, check_password_hash
 import functools
+import datetime
 
 # Local file imports
 from database import get_db
@@ -75,6 +76,9 @@ def login():
             session.clear()
             session['session_id'] = cur_user['id']
             session.permanent = True
+            login_query = 'INSERT INTO logins(uname, request, access_time) VALUES (?, ?, ?)'
+            db_connection.execute(login_query,(uname, 'login', datetime.datetime.now()))
+            db_connection.commit()
         
         return redirect(url_for('login.loginresult', result=error))
 
@@ -85,6 +89,10 @@ def loginresult():
 @root_view.route('/logout')
 def logout():
     print(request.headers)
+    db_connection = get_db()
+    login_query = 'INSERT INTO logins(uname, request, access_time) VALUES (?, ?, ?)'
+    db_connection.execute(login_query,(g.user['uname'], 'logout', datetime.datetime.now()))
+    db_connection.commit()
     session.clear()
     g.user = None
     return redirect(url_for('login.basepath'))

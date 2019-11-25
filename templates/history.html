@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}Spell Checker{% endblock %}
+{% block content %}
+<div class="container">
+    <h2>History of queries</h2>
+    <br/>
+    <span id="numqueries">Number of queries made : {{list|length}}</span>
+    <table>
+        <tr>
+            <th>Query ID</th>
+            <th>Query</th>
+            <th>Query Result</th>
+        </tr>
+        {% for query in list %}
+        <tr>
+            <td id="{{query.queryid}}">
+                <a href="#">{{query.queryid}}</a>
+            </td>
+            <td id="querytext">{{query.querytext}}</td>
+            <td id="queryresults">{{query.queryresults}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    
+</div>
+{% endblock %}

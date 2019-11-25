@@ -1,10 +1,10 @@
 import sqlite3
 import click
+
 from flask import current_app, g
 from flask.cli import with_appcontext
 
 DATABASE = ''
-
 
 def get_db():
     if 'db' not in g:
@@ -21,6 +21,7 @@ def init_db():
     db = get_db()
     with current_app.open_resource('schema.sql', mode='r') as f:
         db.cursor().executescript(f.read())
+    # Base.metadata.create_all(bind=engine)
     db.commit()
 
 def close_db(e=None):
