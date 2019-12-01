@@ -45,41 +45,66 @@ def spell_check():
 @isLoggedIn
 def get_queries():
     if request.method == 'GET':
-        query_list = []
-        select_query = 'SELECT * FROM logs WHERE uname = ?'
-        uname = g.user['uname']
         db_connection = database.get_db()
         db_cursor = db_connection.cursor()
-        queries = db_cursor.execute(select_query,(uname,))
-        for row in queries:
-            query_list.append({
+        query_list = []
+        if g.user['uname'] != 'admin':
+            select_query = 'SELECT * FROM logs WHERE uname = ?'
+            uname = g.user['uname']    
+            queries = db_cursor.execute(select_query,(uname,))
+            for row in queries:
+                query_list.append({
+                "queryid": str(row[0]),
+                "username": str(row[1]),
+                "querytext": str(row[2]),
+                "queryresults": str(row[3])
+                })
+            print(query_list)
+        else:
+            select_query = 'SELECT * FROM logs'
+            queries = db_cursor.execute(select_query)
+            for row in queries:
+                query_list.append({
+                "queryid": str(row[0]),
+                "username": str(row[1]),
+                "querytext": str(row[2]),
+                "queryresults": str(row[3])
+                })
+            print(query_list)
+        return render_template('/history.html', list=query_list)
+
+@root_view.route('/history/query<queryId>', methods=['GET',])
+@isLoggedIn
+def get_individual_query(queryId):
+    query_list = []
+    username = g.user['uname']
+    db_connection = database.get_db()
+    db_cursor = db_connection.cursor()
+    if username != 'admin':
+        select_query = 'SELECT * FROM logs WHERE uname = ? and id = ?'
+        if str(queryId).isdigit():
+            queries = db_cursor.execute(select_query, (username, queryId,))
+            for row in queries:
+                query_list.append({
+                "queryid": str(row[0]),
+                "username": str(row[1]),
+                "querytext": str(row[2]),
+                "queryresults": str(row[3])
+                })
+            print(query_list)
+    else:
+        select_query = 'SELECT * FROM logs WHERE id = ?'
+        if str(queryId).isdigit():
+            queries = db_cursor.execute(select_query, (username,))
+            for row in queries:
+                query_list.append({
                 "queryid": str(row[0]),
                 "username": str(row[1]),
                 "querytext": str(row[2]),
                 "queryresults": str(row[3])
                 })
         print(query_list)
-        return render_template('/history.html', list=query_list)
-
-# @root_view.route('/history/query<queryId>', methods=['GET',])
-# @isLoggedIn
-# def get_individual_query(queryId):
-#     query_list = []
-#     username = g.user['uname']
-#     db_connection = database.get_db()
-#     db_cursor = db_connection.cursor()
-#     select_query = 'SELECT * FROM logs WHERE uname = ? and id = ?'
-#     if str(queryId).isdigit():
-#         queries = db_cursor.execute(select_query, (username, queryId,))
-#         for row in queries:
-#             query_list.append({
-#                 "queryid": str(row[0]),
-#                 "username": str(row[1]),
-#                 "querytext": str(row[2]),
-#                 "queryresults": str(row[3])
-#                 })
-#         print(query_list)
-#         return render_template('/individual_history.html', query=query_list)
+    return render_template('/individual_history.html', query=query_list)
         
 
 @root_view.route('/login_history', methods=['GET', 'POST'])
