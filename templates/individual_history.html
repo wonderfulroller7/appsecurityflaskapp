@@ -3,6 +3,7 @@
 {% block content %}
 <div class="container">
     <h2>History </h2>
+    {% for query in list %}
     <span id="queryid">{{query.queryid}}</span>
     <br/>
     <span id="username">{{query.uname}}</span>
@@ -10,5 +11,6 @@
     <span id="querytext">{{query.querytext}}</span>
     <br/>
     <span id="queryresults">{{query.queryresults}}</span>
+    {% endfor %}
 </div>
 {% endblock %}
