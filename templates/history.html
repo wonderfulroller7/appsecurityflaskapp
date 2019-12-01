@@ -13,7 +13,7 @@
         </tr>
         {% for query in list %}
         <tr>
-            <td id="{{query.queryid}}">
+            <td id="query{{query.queryid}}">
                 <a href="/history/query{{query.queryid}}">{{query.queryid}}</a>
             </td>
             <td id="querytext">{{query.querytext}}</td>
