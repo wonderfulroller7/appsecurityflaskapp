@@ -14,7 +14,7 @@
         {% for query in list %}
         <tr>
             <td id="{{query.queryid}}">
-                <a href="#">{{query.queryid}}</a>
+                <a href="/history/query{{query.queryid}}">{{query.queryid}}</a>
             </td>
             <td id="querytext">{{query.querytext}}</td>
             <td id="queryresults">{{query.queryresults}}</td>

@@ -3,12 +3,12 @@
 {% block content %}
 <div class="container">
     <h2>History </h2>
-    <span id="queryid">{{}}</span>
+    <span id="queryid">{{query[0].queryid}}</span>
     <br/>
-    <span id="username">{{}}</span>
+    <span id="username">{{query[0].uname}}</span>
     <br/>
-    <span id="querytext">{{}}</span>
+    <span id="querytext">{{query[0].querytext}}</span>
     <br/>
-    <span id="queryresults">{{}}</span>
+    <span id="queryresults">{{query[0].queryresults}}</span>
 </div>
 {% endblock %}

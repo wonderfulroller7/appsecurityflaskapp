@@ -53,13 +53,34 @@ def get_queries():
         queries = db_cursor.execute(select_query,(uname,))
         for row in queries:
             query_list.append({
-                "queryid": 'query' + str(row[0]),
+                "queryid": str(row[0]),
                 "username": str(row[1]),
                 "querytext": str(row[2]),
                 "queryresults": str(row[3])
                 })
         print(query_list)
         return render_template('/history.html', list=query_list)
+
+@root_view.route('/history/query<queryId>', methods=['GET',])
+@isLoggedIn
+def get_individual_query(queryId):
+    query_list = []
+    username = g.user['uname']
+    db_connection = database.get_db()
+    db_cursor = db_connection.cursor()
+    select_query = 'SELECT * FROM logs WHERE uname = ? and id = ?'
+    if str(queryId).isdigit():
+        queries = db_cursor.execute(select_query, (username, queryId,))
+        for row in queries:
+            query_list.append({
+                "queryid": str(row[0]),
+                "username": str(row[1]),
+                "querytext": str(row[2]),
+                "queryresults": str(row[3])
+                })
+        print(query_list)
+        return render_template('/individual_history.html', query=query_list)
+        
 
 @root_view.route('/login_history', methods=['GET', 'POST'])
 @isLoggedIn
