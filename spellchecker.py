@@ -104,7 +104,7 @@ def get_individual_query(queryId):
                 "queryresults": str(row[3])
                 })
         print(query_list)
-    return render_template('/individual_history.html', query=query_list)
+    return render_template('/individual_history.html', list=query_list)
         
 
 @root_view.route('/login_history', methods=['GET', 'POST'])
