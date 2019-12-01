@@ -4,6 +4,16 @@
 <div class="container">
     <h2>History of queries</h2>
     <br/>
+    {% if g.user['uname'] == 'admin' %}
+    <form method="post" action="">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+        <div class="form-group">
+            <label for="userid">Userid Login History:</label>
+            <input class="form-control vresize" name="userid" id="userid" required ></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Get User history</button>
+    </form>
+    {% endif %}
     <span id="numqueries">Number of queries made : {{list|length}}</span>
     <table>
         <tr>
