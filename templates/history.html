@@ -8,6 +8,7 @@
     <table>
         <tr>
             <th>Query ID</th>
+            <th>Username</th>
             <th>Query</th>
             <th>Query Result</th>
         </tr>
@@ -16,6 +17,7 @@
             <td id="query{{query.queryid}}">
                 <a href="/history/query{{query.queryid}}">{{query.queryid}}</a>
             </td>
+            <td id="username">{{query.username}}</td>
             <td id="querytext">{{query.querytext}}</td>
             <td id="queryresults">{{query.queryresults}}</td>
         </tr>
