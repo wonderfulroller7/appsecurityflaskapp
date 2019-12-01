@@ -110,9 +110,10 @@ def get_individual_query(queryId):
                 })
             print(query_list)
     else:
+        print(queryId)
         select_query = 'SELECT * FROM logs WHERE id = ?'
         if str(queryId).isdigit():
-            queries = db_cursor.execute(select_query, (username,))
+            queries = db_cursor.execute(select_query, (queryId,))
             for row in queries:
                 query_list.append({
                 "queryid": str(row[0]),
