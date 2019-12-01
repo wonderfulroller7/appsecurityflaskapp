@@ -41,7 +41,7 @@ def spell_check():
     else:
         return render_template('/spellchecker.html')
 
-@root_view.route('/history', methods=['GET'])
+@root_view.route('/history', methods=['GET', 'POST'])
 @isLoggedIn
 def get_queries():
     if request.method == 'GET':
@@ -72,6 +72,23 @@ def get_queries():
                 })
             print(query_list)
         return render_template('/history.html', list=query_list)
+    else:
+        db_connection = database.get_db()
+        db_cursor = db_connection.cursor()
+        query_list = []
+        username = request.form['userquery']
+        select_query = 'SELECT * FROM logs WHERE uname = ?'
+        queries = db_cursor.execute(select_query,(username,))
+        for row in queries:
+            query_list.append({
+                "queryid": str(row[0]),
+                "username": str(row[1]),
+                "querytext": str(row[2]),
+                "queryresults": str(row[3])
+                })
+        print(query_list)
+        return render_template('/history.html', list=query_list)
+
 
 @root_view.route('/history/query<queryId>', methods=['GET',])
 @isLoggedIn

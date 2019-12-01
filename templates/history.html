@@ -5,11 +5,11 @@
     <h2>History of queries</h2>
     <br/>
     {% if g.user['uname'] == 'admin' %}
-    <form method="post" action="">
+    <form method="post" action="/history">
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
         <div class="form-group">
-            <label for="userid">Userid Login History:</label>
-            <input class="form-control vresize" name="userid" id="userid" required ></textarea>
+            <label for="userid">Userid Query:</label>
+            <input class="form-control vresize" name="userid" id="userquery" required ></textarea>
         </div>
         <button type="submit" class="btn btn-primary">Get User history</button>
     </form>
