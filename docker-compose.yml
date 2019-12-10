@@ -1,0 +1,7 @@
+version: '3' # docker service version being stated
+services:
+ node-app:
+  restart: always
+  build: .
+  ports:
+   - "8080:5000"
