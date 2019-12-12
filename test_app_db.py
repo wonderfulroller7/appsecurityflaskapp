@@ -25,19 +25,19 @@ def test_admin(client, app):
         data={'inputtext': "Agana exsaka sapulu",'csrf_token':token})
     client.post('/logout')
     client.post('/login', data = {'uname': 'admin', 'pword': 'Administrator@1', '2fa': '12345678901'})
-    response = client.get('/spell_check')
+    response = client.get('/history')
+    token = response.data.decode().split("csrf_token")[1].split("value=")[1].split("\"/>")[0].split("TOKEN \"")[0][1:]
     with client:
-        token = response.data.decode().split("csrf_token")[1].split("value=")[1].split("\"/>")[0].split("TOKEN \"")[0][1:]
+        # token = response.data.decode().split("csrf_token")[1].split("value=")[1].split("\"/>")[0].split("TOKEN \"")[0][1:]
         history_response = client.get('/history')
+        #token = history_response.data.decode().split("csrf_token")[1].split("value=")[1].split("\"/>")[0].split("TOKEN \"")[0][1:]
         # 2 queries should be present
         #print(history_response.data.decode())
-        assert b"id=\"userquery\"" in history_response.data
-        user_response = client.post('/history',
-            data = {'userid': 'sb6856','csrf_token':token}
-        )
-        print(user_response.data.decode())
-        print(user_response.status_code)
+        assert b"id=\"queryresults\"" in history_response.data
+        response = client.post('/history', data = {'userid': 'sb6856', 'csrf_token': token})
+        print(response.data.decode())
+        print(response.status_code)
         
         #allow admin user to post a username
-        assert user_response.status_code==200
-        assert "<h2>Queries Made by sb6856 </h2>" in user_response.data.decode()
+        assert response.status_code==200
+        assert "<h2>Queries Made by sb6856 </h2>" in response.data.decode()
