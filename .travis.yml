@@ -3,4 +3,4 @@ services:
   - docker
 
 before install:
-  - docker build -t sourbose/appsecflaskapp .
+  - docker build -t sourbose/appsecflaskapp -f Dockerfile .
