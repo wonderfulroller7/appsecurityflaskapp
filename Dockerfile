@@ -1,5 +1,5 @@
 #Specify a base image
-FROM python:ubuntu
+FROM ubuntu:18.04
 
 #State a work directory
 WORKDIR /usr/app
