@@ -21,7 +21,7 @@ def spell_check():
         f = open(input_file, 'w')
         f.write(string_to_be_checked)
         f.close()
-        arguments = ("./spell_check", str(input_file), "dictionary.txt")
+        arguments = ("../appsecurityflaskapp/spell_check", str(input_file), "dictionary.txt")
         try:
             shell_process = subprocess.Popen(arguments, stdout=subprocess.PIPE)
             shell_process.wait()
