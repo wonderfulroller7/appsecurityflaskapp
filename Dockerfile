@@ -1,5 +1,5 @@
 #Specify a base image
-FROM python:alpine
+FROM python:ubuntu
 
 #State a work directory
 WORKDIR /usr/app
