@@ -1,9 +1,9 @@
 #Specify a base image
-FROM ubuntu:18.04
+FROM ubuntu:16.04
 
 # Install pip
 RUN apt-get update && apt-get install -y \
-    python3-pip
+    python-pip
 
 #State a work directory
 WORKDIR /usr/app
@@ -12,7 +12,7 @@ WORKDIR /usr/app
 # to avoid the building the project multiple times 
 COPY ./requirements.txt ./
 #Install some dependencies
-RUN pip3 install -r requirements.txt
+RUN pip install -r requirements.txt
 # Copy the rest of the files to the working directory
 COPY ./ ./
 
