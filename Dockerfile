@@ -2,8 +2,8 @@
 FROM ubuntu:18.04
 
 # Install pip
-RUN apt update
-RUN apt-get install python3-pip
+RUN apt-get update && apt-get install -y \
+    install python3-pip
 
 #State a work directory
 WORKDIR /usr/app
