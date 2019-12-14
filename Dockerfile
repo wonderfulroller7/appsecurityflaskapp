@@ -1,6 +1,10 @@
 #Specify a base image
 FROM ubuntu:18.04
 
+# Install pip
+RUN apt update
+RUN apt-get install python3-pip
+
 #State a work directory
 WORKDIR /usr/app
 
