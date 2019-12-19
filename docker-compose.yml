@@ -5,3 +5,9 @@ services:
   build: .
   ports:
    - "8080:5000"
+  secrets:
+    - secretfile
+
+secrets:
+ secretfile:
+  file: secrets.tml
