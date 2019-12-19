@@ -11,7 +11,7 @@ import spellchecker
 def create_app():
 
     try:
-        configfile = open("/etc/secrets/dev_key", "r")
+        configfile = open("/etc/secrets/db_key", "r")
         for line in configfile:
             secret_key = line.replace("\n", "")
     except:
