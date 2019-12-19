@@ -10,4 +10,4 @@ services:
 
 secrets:
  secretfile:
-  file: secrets.tml
+  file: secrets.yml
