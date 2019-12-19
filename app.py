@@ -9,11 +9,18 @@ import spellchecker
 
 
 def create_app():
+
+    try:
+        configfile = open("/etc/secrets/dev_key", "r")
+        for line in configfile:
+            secret_key = line.replace("\n", "")
+    except:
+        secret_key = "babayaga"
     app = Flask(__name__, instance_relative_config=True)
     csrf = CSRFProtect()
     csrf.init_app(app)
     app.config.from_mapping(
-        SECRET_KEY = 'babayaga',
+        SECRET_KEY = secret_key,
         DATABASE = os.path.join(app.instance_path, 'spellchecker.sqlite'),
     )
 
